@@ -28,5 +28,8 @@ nosetests.xml
 # npm
 node_modules/
 
-# Campass
+# Compass
 .sass-cache
+
+# Vagrant
+.vagrant
