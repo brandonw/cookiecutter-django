@@ -6,6 +6,10 @@ $dependencies = <<SCRIPT
     DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql libpq-dev
     DEBIAN_FRONTEND=noninteractive apt-get install -y python-dev libjpeg-dev zlib1g-dev
     DEBIAN_FRONTEND=noninteractive apt-get install -y python-pip
+    DEBIAN_FRONTEND=noninteractive apt-get install -y nginx
+    DEBIAN_FRONTEND=noninteractive cp /vagrant/nginx /etc/nginx/sites-available/{{cookiecutter.repo_name}}
+    DEBIAN_FRONTEND=noninteractive ln -s /etc/nginx/sites-available/{{cookiecutter.repo_name}} /etc/nginx/sites-enabled/
+    DEBIAN_FRONTEND=noninteractive rm /etc/nginx/sites-enabled/default
     DEBIAN_FRONTEND=noninteractive apt-get install -y python-software-properties python g++ make
     DEBIAN_FRONTEND=noninteractive add-apt-repository -y ppa:chris-lea/node.js
     DEBIAN_FRONTEND=noninteractive apt-get update
@@ -13,6 +17,7 @@ $dependencies = <<SCRIPT
     DEBIAN_FRONTEND=noninteractive sh -c 'cd /vagrant && npm install'
     DEBIAN_FRONTEND=noninteractive pip install -r /vagrant/requirements/local.txt
     DEBIAN_FRONTEND=noninteractive ln -s /vagrant/node_modules/grunt-cli/bin /home/vagrant/bin
+    DEBIAN_FRONTEND=noninteractive service nginx start
 SCRIPT
 
 Vagrant.configure('2') do |config|
@@ -22,7 +27,7 @@ Vagrant.configure('2') do |config|
 
     config.ssh.forward_agent = true
     # Forward the dev server port
-    config.vm.network :forwarded_port, host: 8000, guest: 8000
+    config.vm.network :forwarded_port, host: 8000, guest: 80
 
     config.vm.provision "shell", inline: $setup
     config.vm.provision "shell", inline: $dependencies
