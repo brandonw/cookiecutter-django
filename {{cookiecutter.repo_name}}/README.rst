@@ -38,48 +38,25 @@ DJANGO_SESSION_COOKIE_SECURE            SESSION_COOKIE_SECURE       n/a         
 Getting up and running
 ----------------------
 
-The steps below will get you up and running with a local development environment. We assume you have the following installed:
+1. Run ``vagrant up`` to create, start, and provision your development virtual machine.
+2. Run ``vagrant ssh`` to ssh into the newly provisioned virtual machine.
+3. Run ``sudo su - postgres`` to switch to the postgres user in order to configure the database.
+4. Run ``createuser --pwprompt`` to create a new database user with a password.
+5. Run ``createdb {{cookiecutter.repo_name}}`` to create a new database for your project.
+6. Change directory to ``/vagrant`` which is the shared folder between the virtual machine and your local project.
+7. Update ``{{cookiecutter.repo_name}}/config/settings.py``'s ``DATABASE``: ``postgres://user:pass@localhost/{{cookiecutter.repo_name}}``
+8. Run ``python {{cookiecutter.repo_name}}/manage.py syncdb`` to create tables
+9. Run ``python {{cookiecutter.repo_name}}/manage.py migrate`` to install migrations
+10. Run ``python {{cookiecutter.repo_name}}/manage.py createsuperuser`` to create a superuser
+11. Run ``python {{cookiecutter.repo_name}}/manage.py collectstatic`` to collect all static files from both your project and any dependencies.
+12. Move all static files found from ``staticfiles`` into ``{{cookiecutter.repo_name}}/static``. This will allow nginx to maintain its existing
+    static files route, while still allowing you to easily change your local static files. Steps 10 and 11 will need to be repeated any time
+    the static files outside of your local project change, otherwise nginx will not see the changes made.
 
-* pip
-* virtualenv
-* PostgreSQL
+You can now run ``grunt serve`` to serve the app, which you can then view from your host at localhost:8000. This will enable auto-reloading
+of the uwsgi server on any static file changes, including Sass / Comapss CSS compilation.
 
-First make sure to create and activate a virtualenv_, then open a terminal at the project root and install the requirements for local development::
-
-    $ pip install -r requirements/local.txt
-
-.. _virtualenv: http://docs.python-guide.org/en/latest/dev/virtualenvs/
-
-You can now run the usual Django ``runserver`` command (replace ``yourapp`` with the name of the directory containing the Django project)::
-
-    $ python yourapp/manage.py runserver
-
-The base app will run but you'll need to carry out a few steps to make the sign-up and login forms work. These are currently detailed in `issue #39`_.
-
-.. _issue #39: https://github.com/pydanny/cookiecutter-django/issues/39
-
-**Live reloading and Sass CSS compilation**
-
-If you'd like to take advantage of live reloading and Sass / Compass CSS compilation you can do so with the included Grunt task.
-
-Make sure that nodejs_ is installed. Then in the project root run::
-
-    $ npm install grunt
-
-.. _nodejs: http://nodejs.org/download/
-
-Now you just need::
-
-    $ grunt serve
-
-The base app will now run as it would with the usual ``manage.py runserver`` but with live reloading and Sass compilation enabled.
-
-To get live reloading to work you'll probably need to install an `appropriate browser extension`_
-
-.. _appropriate browser extension: http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions-
-
-It's time to write the code!!!
-
+While your ``vagrant ssh`` session is running ``grunt serve``, you can now code from your host through the shared folder. It's time to write the code!!!
 
 Deployment
 ------------
