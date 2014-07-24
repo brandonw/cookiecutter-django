@@ -4,6 +4,9 @@ SCRIPT
 
 $dependencies = <<SCRIPT
     DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql libpq-dev
+    DEBIAN_FRONTEND=noninteractive su - postgres -c 'createuser vagrant -SRD'
+    DEBIAN_FRONTEND=noninteractive su - postgres -c 'createdb {{cookiecutter.repo_name}}'
+    DEBIAN_FRONTEND=noninteractive su - postgres -c 'psql -c "GRANT ALL PRIVILEGES ON DATABASE {{cookiecutter.repo_name}} TO vagrant;"'
     DEBIAN_FRONTEND=noninteractive apt-get install -y python-dev libjpeg-dev zlib1g-dev
     DEBIAN_FRONTEND=noninteractive apt-get install -y python-pip
     DEBIAN_FRONTEND=noninteractive apt-get install -y nginx
@@ -18,6 +21,11 @@ $dependencies = <<SCRIPT
     DEBIAN_FRONTEND=noninteractive pip install -r /vagrant/requirements/local.txt
     DEBIAN_FRONTEND=noninteractive ln -s /vagrant/node_modules/grunt-cli/bin /home/vagrant/bin
     DEBIAN_FRONTEND=noninteractive service nginx start
+    DEBIAN_FRONTEND=noninteractive su - vagrant -c 'python /vagrant/{{cookiecutter.repo_name}}/manage.py syncdb'
+    DEBIAN_FRONTEND=noninteractive su - vagrant -c 'python /vagrant/{{cookiecutter.repo_name}}/manage.py migrate'
+    DEBIAN_FRONTEND=noninteractive su - vagrant -c 'python /vagrant/{{cookiecutter.repo_name}}/manage.py collectstatic --noinput'
+    DEBIAN_FRONTEND=noninteractive su - vagrant -c 'cp -r /vagrant/staticfiles/* /vagrant/{{cookiecutter.repo_name}}/static'
+    DEBIAN_FRONTEND=noninteractive su - vagrant -c 'rm -r /vagrant/staticfiles'
 SCRIPT
 
 Vagrant.configure('2') do |config|

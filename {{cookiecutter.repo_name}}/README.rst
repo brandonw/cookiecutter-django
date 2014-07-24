@@ -40,23 +40,14 @@ Getting up and running
 
 1. Run ``vagrant up`` to create, start, and provision your development virtual machine.
 2. Run ``vagrant ssh`` to ssh into the newly provisioned virtual machine.
-3. Run ``sudo su - postgres`` to switch to the postgres user in order to configure the database.
-4. Run ``createuser --pwprompt`` to create a new database user with a password.
-5. Run ``createdb {{cookiecutter.repo_name}}`` to create a new database for your project.
-6. Change directory to ``/vagrant`` which is the shared folder between the virtual machine and your local project.
-7. Update ``{{cookiecutter.repo_name}}/config/settings.py``'s ``DATABASE``: ``postgres://user:pass@localhost/{{cookiecutter.repo_name}}``
-8. Run ``python {{cookiecutter.repo_name}}/manage.py syncdb`` to create tables
-9. Run ``python {{cookiecutter.repo_name}}/manage.py migrate`` to install migrations
-10. Run ``python {{cookiecutter.repo_name}}/manage.py createsuperuser`` to create a superuser
-11. Run ``python {{cookiecutter.repo_name}}/manage.py collectstatic`` to collect all static files from both your project and any dependencies.
-12. Move all static files found from ``staticfiles`` into ``{{cookiecutter.repo_name}}/static``. This will allow nginx to maintain its existing
-    static files route, while still allowing you to easily change your local static files. Steps 10 and 11 will need to be repeated any time
-    the static files outside of your local project change, otherwise nginx will not see the changes made.
+3. Run ``python {{cookiecutter.repo_name}}/manage.py createsuperuser`` to create a superuser
 
 You can now run ``grunt serve`` to serve the app, which you can then view from your host at localhost:8000. This will enable auto-reloading
 of the uwsgi server on any static file changes, including Sass / Comapss CSS compilation.
 
 While your ``vagrant ssh`` session is running ``grunt serve``, you can now code from your host through the shared folder. It's time to write the code!!!
+
+Note: When any included dependency changes its static files, you must run ``collectstatic`` and then move the collected files into ``{{cookiecutter.repo_name}}/static``, otherwise nginx will not see them.
 
 Deployment
 ------------
