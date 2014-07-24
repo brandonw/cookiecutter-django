@@ -45,7 +45,7 @@ and then editing the results to include your name, email, and various configurat
 
 First, get cookiecutter. Trust me, it's awesome::
 
-    $ pip install cookiecutter
+    $ pip install --user cookiecutter
 
 Now run it against this repo::
 
