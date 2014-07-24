@@ -28,8 +28,8 @@ server {
 	# Make site accessible from http://localhost/
 	server_name localhost;
 
-	location ^~ /static/ {
-		root /vagrant/{{cookiecutter.repo_name}}/;
+	location /static/ {
+		alias /vagrant/staticfiles/;
 	}
 
 	location / {

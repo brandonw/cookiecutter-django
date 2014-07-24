@@ -42,12 +42,9 @@ Getting up and running
 2. Run ``vagrant ssh`` to ssh into the newly provisioned virtual machine.
 3. Run ``python {{cookiecutter.repo_name}}/manage.py createsuperuser`` to create a superuser
 
-You can now run ``grunt serve`` to serve the app, which you can then view from your host at localhost:8000. This will enable auto-reloading
-of the uwsgi server on any static file changes, including Sass / Comapss CSS compilation.
+You can now run ``grunt serve`` while SSHed into the ``/vagrant`` directory to serve the app, which you can then view from your host at localhost:8000. In addition, the uwsgi server will be reloaded automatically upon file changes.
 
-While your ``vagrant ssh`` session is running ``grunt serve``, you can now code from your host through the shared folder. It's time to write the code!!!
-
-Note: When any included dependency changes its static files, you must run ``collectstatic`` and then move the collected files into ``{{cookiecutter.repo_name}}/static``, otherwise nginx will not see them.
+Note that when any included dependency changes its static files, you must run ``collectstatic -l`` to update the staticfiles directory, which is where nginx forwards ``/static`` requests to.
 
 Deployment
 ------------
