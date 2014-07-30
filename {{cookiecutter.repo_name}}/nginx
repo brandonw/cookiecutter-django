@@ -28,6 +28,10 @@ server {
 	# Make site accessible from http://localhost/
 	server_name localhost;
 
+	# Ensure vagrant shared folders does not prevent static files from updating
+	# https://forums.virtualbox.org/viewtopic.php?f=1&t=24905
+	sendfile off;
+
 	location /static/ {
 		alias /vagrant/staticfiles/;
 	}
