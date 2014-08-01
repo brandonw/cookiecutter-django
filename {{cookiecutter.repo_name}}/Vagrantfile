@@ -24,7 +24,7 @@ $dependencies = <<SCRIPT
     DEBIAN_FRONTEND=noninteractive service nginx start
     DEBIAN_FRONTEND=noninteractive su - vagrant -c 'python /vagrant/{{cookiecutter.repo_name}}/manage.py syncdb'
     DEBIAN_FRONTEND=noninteractive su - vagrant -c 'python /vagrant/{{cookiecutter.repo_name}}/manage.py migrate'
-    DEBIAN_FRONTEND=noninteractive su - vagrant -c 'python /vagrant/{{cookiecutter.repo_name}}/manage.py collectstatic --noinput -l'
+    DEBIAN_FRONTEND=noninteractive su - vagrant -c 'python /vagrant/{{cookiecutter.repo_name}}/manage.py collectstatic --noinput -l -i sass'
 SCRIPT
 
 Vagrant.configure('2') do |config|
