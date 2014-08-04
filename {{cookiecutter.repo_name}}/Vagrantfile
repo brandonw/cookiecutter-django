@@ -7,21 +7,26 @@ $dependencies = <<SCRIPT
     DEBIAN_FRONTEND=noninteractive su - postgres -c 'createuser vagrant -SRD'
     DEBIAN_FRONTEND=noninteractive su - postgres -c 'createdb {{cookiecutter.repo_name}}'
     DEBIAN_FRONTEND=noninteractive su - postgres -c 'psql -c "GRANT ALL PRIVILEGES ON DATABASE {{cookiecutter.repo_name}} TO vagrant;"'
-    DEBIAN_FRONTEND=noninteractive apt-get install -y python-dev libjpeg-dev zlib1g-dev
-    DEBIAN_FRONTEND=noninteractive apt-get install -y python-pip rubygems
+
     DEBIAN_FRONTEND=noninteractive apt-get install -y nginx
     DEBIAN_FRONTEND=noninteractive cp /vagrant/nginx.test /etc/nginx/sites-available/{{cookiecutter.repo_name}}
     DEBIAN_FRONTEND=noninteractive ln -s /etc/nginx/sites-available/{{cookiecutter.repo_name}} /etc/nginx/sites-enabled/
     DEBIAN_FRONTEND=noninteractive rm /etc/nginx/sites-enabled/default
+    DEBIAN_FRONTEND=noninteractive service nginx start
+
+    DEBIAN_FRONTEND=noninteractive apt-get install -y python-dev libjpeg-dev zlib1g-dev
+    DEBIAN_FRONTEND=noninteractive apt-get install -y python-pip rubygems
     DEBIAN_FRONTEND=noninteractive apt-get install -y python-software-properties python g++ make
     DEBIAN_FRONTEND=noninteractive add-apt-repository -y ppa:chris-lea/node.js
     DEBIAN_FRONTEND=noninteractive apt-get update
     DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
-    DEBIAN_FRONTEND=noninteractive sh -c 'cd /vagrant && npm install'
-    DEBIAN_FRONTEND=noninteractive pip install -r /vagrant/requirements/local.txt
-    DEBIAN_FRONTEND=noninteractive gem install --no-user-install compass -v 0.12.7
-    DEBIAN_FRONTEND=noninteractive ln -s /vagrant/node_modules/grunt-cli/bin /home/vagrant/bin
-    DEBIAN_FRONTEND=noninteractive service nginx start
+    DEBIAN_FRONTEND=noninteractive su - vagrant -c 'sh -c 'cd /vagrant && npm install"'
+    DEBIAN_FRONTEND=noninteractive su - vagrant -c 'pip install --user -r /vagrant/requirements/local.txt'
+    DEBIAN_FRONTEND=noninteractive su - vagrant -c 'gem install --user-install compass -v 0.12.7'
+    DEBIAN_FRONTEND=noninteractive echo 'PATH="$HOME/.gem/ruby/1.8/bin:$PATH"' >> /home/vagrant/.profile
+    DEBIAN_FRONTEND=noninteractive echo 'PATH="/vagrant/node_modules/.bin:$PATH"' >> /home/vagrant/.profile
+    DEBIAN_FRONTEND=noninteractive echo 'PATH="$HOME/.local/bin:$PATH"' >> /home/vagrant/.profile
+
     DEBIAN_FRONTEND=noninteractive su - vagrant -c 'python /vagrant/{{cookiecutter.repo_name}}/manage.py syncdb'
     DEBIAN_FRONTEND=noninteractive su - vagrant -c 'python /vagrant/{{cookiecutter.repo_name}}/manage.py migrate'
     DEBIAN_FRONTEND=noninteractive su - vagrant -c 'python /vagrant/{{cookiecutter.repo_name}}/manage.py collectstatic --noinput -l -i sass'
