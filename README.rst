@@ -19,6 +19,7 @@ Features
 * Basic caching setup
 * Grunt build for compass and livereload
 * Basic e-mail configurations for send emails via SendGrid_
+* Vagrant ready to go, provisioned with Ansible
 
 .. _Bootstrap: https://github.com/twbs/bootstrap
 .. _AngularJS: https://github.com/angular/angular.js
@@ -43,7 +44,9 @@ Usage
 Let's pretend you want to create a Django project called "redditclone". Rather than using `startproject`
 and then editing the results to include your name, email, and various configuration issues that always get forgotten until the worst possible moment, get cookiecutter_ to do all the work.
 
-First, get cookiecutter. Trust me, it's awesome::
+First, install ansible via your package manager. It will be needed once a vagrant VM is provisioned.
+
+Then, get cookiecutter. Trust me, it's awesome::
 
     $ pip install --user cookiecutter
 

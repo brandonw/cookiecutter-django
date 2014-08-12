@@ -1,0 +1,9 @@
+---
+- name: Install postgresql
+  sudo: yes
+  apt: pkg={{ '{{' }} item }} state=present
+  with_items:
+    - postgresql
+    - libpq-dev
+  notify:
+    - Restart postgresql
