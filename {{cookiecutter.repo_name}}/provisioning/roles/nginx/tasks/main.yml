@@ -5,7 +5,7 @@
 
 - name: Copy nginx configuration to available sites
   sudo: yes
-  copy: src=test.conf dest=/etc/nginx/sites-available/repo_name
+  copy: src=test.conf dest=/etc/nginx/sites-available/{{cookiecutter.repo_name}}
 
 - name: Enable site
   sudo: yes
