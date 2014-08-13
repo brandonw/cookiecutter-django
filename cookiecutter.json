@@ -1,9 +1,9 @@
 {
-    "project_name": "project_name is the title of the project.",
-    "repo_name":"repo_name is used for describing the directory structure.",
+    "project_name": "Project Title",
+    "repo_name":"project_title",
     "author_name": "Your Name",
-    "email": "Your email",
-    "description": "A short description of the project.",
+    "email": "your@email.com",
+    "description": "Project description here.",
     "year": "2014",
     "domain_name": "example.com",
     "version": "0.1.0"
