@@ -6,10 +6,6 @@
     - python
     - python-pip
     - python-dev
-    #- libjpeg-dev
-    #- zlib1g-dev
-    #- g++
-    #- make
 
 - name: Install necessary python packages
   sudo: yes
