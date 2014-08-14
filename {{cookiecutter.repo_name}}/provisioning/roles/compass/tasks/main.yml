@@ -1,10 +1,6 @@
 ---
-- name: Install rubygems
-  sudo: yes
-  apt: name=rubygems state=present
-
 - name: Install Compass gem
   gem: name=compass version=0.12.7 state=present
 
 - name: Update PATH
-  lineinfile: dest=/home/vagrant/.profile line='PATH="$HOME/.gem/ruby/1.8/bin:$PATH"'
+  lineinfile: dest=/home/vagrant/.profile line='PATH="$(ruby -rubygems -e "puts Gem.user_dir")/bin:$PATH"'
