@@ -40,11 +40,11 @@ Getting up and running
 
 1. Run ``vagrant up`` to create, start, and provision your development virtual machine.
 2. Run ``vagrant ssh`` to ssh into the newly provisioned virtual machine.
-3. Run ``python {{cookiecutter.repo_name}}/manage.py createsuperuser`` to create a superuser
+3. Run ``python /vagrant/{{cookiecutter.repo_name}}/manage.py createsuperuser`` to create a superuser
 
 You can now run ``grunt serve`` while SSHed into the ``/vagrant`` directory to serve the app, which you can then view from your host at localhost:8000. In addition, the uwsgi server will be reloaded automatically upon file changes.
 
-Note that when any included dependency changes its static files, you must run ``collectstatic -l`` to update the staticfiles directory, which is where nginx forwards ``/static`` requests to.
+Note that when any included dependency changes its static files, you must run ``collectstatic -l -i sass`` to update the staticfiles directory, which is where nginx forwards ``/static`` requests to.
 
 Deployment
 ------------
