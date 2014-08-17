@@ -5,5 +5,6 @@
   with_items:
     - postgresql
     - libpq-dev
+    - python-psycopg2
   notify:
     - Restart postgresql
