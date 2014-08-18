@@ -2,12 +2,12 @@
 - name: Create database
   sudo: yes
   sudo_user: postgres
-  postgresql_db: name={{cookiecutter.repo_name}}
+  postgresql_db: name={{cookiecutter.repo_name}} state=present
 
 - name: Create database user
   sudo: yes
   sudo_user: postgres
-  postgresql_user: db={{cookiecutter.repo_name}} name=vagrant
+  postgresql_user: db={{cookiecutter.repo_name}} name=vagrant state=present
 
 - name: Sync DB
   django_manage: app_path=/vagrant/{{cookiecutter.repo_name}} command=syncdb
