@@ -124,12 +124,10 @@ class Common(Configuration):
     ########## END DATABASE CONFIGURATION
 
     ########## CACHING
-    # Do this here because thanks to django-pylibmc-sasl and pylibmc memcacheify is painful to install on windows.
-    # memcacheify is what's used in Production
     CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': ''
+        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+        'LOCATION': '127.0.0.1:11211',
         }
     }
     ########## END CACHING

@@ -34,3 +34,4 @@ django-avatar==2.0
 uwsgi==2.0.6
 
 # Your custom requirements go here
+pylibmc==1.3.0
