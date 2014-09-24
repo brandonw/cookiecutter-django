@@ -48,7 +48,6 @@ class Common(Configuration):
         'django.contrib.admin',
     )
     THIRD_PARTY_APPS = (
-        'south',  # Database migration helpers:
         'crispy_forms',  # Form layouts
         'avatar',  # for user avatars
     )
@@ -63,8 +62,6 @@ class Common(Configuration):
     INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
     INSTALLED_APPS += (
-        # Needs to come last for now because of a weird edge case between
-        #   South and allauth
         'allauth',  # registration
         'allauth.account',  # registration
         'allauth.socialaccount',  # registration

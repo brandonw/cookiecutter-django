@@ -7,10 +7,7 @@
 - name: Create database user
   sudo: yes
   sudo_user: postgres
-  postgresql_user: db={{cookiecutter.repo_name}} name=vagrant state=present
-
-- name: Sync DB
-  django_manage: app_path=/vagrant/{{cookiecutter.repo_name}} command=syncdb
+  postgresql_user: name=vagrant role_attr_flags=CREATEDB state=present
 
 - name: Perform migrations
   django_manage: app_path=/vagrant/{{cookiecutter.repo_name}} command=migrate
